@@ -6,10 +6,11 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "numpy>=2.4.3",
+    "pandas>=3.0.2",
+    "scikit-learn>=1.8.0",
     "torch>=2.11.0",
     "torchvision>=0.26.0",
 ]
 
 [[tool.uv.index]]
 url = "https://download.pytorch.org/whl/cu126"
-default = true
