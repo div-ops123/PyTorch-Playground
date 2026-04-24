@@ -62,9 +62,6 @@ class SalaryPredictor:
         y_scaler_path: str | Path = "artifacts/y_scaler.pkl",
         device: str | None = None,
     ) -> None:
-        self.checkpoint_path = self._resolve_artifact_path(checkpoint_path)
-        self.preprocessor_path = self._resolve_artifact_path(preprocessor_path)
-        self.y_scaler_path = self._resolve_artifact_path(y_scaler_path)
         self.device = torch.device(
             device if device else ("cuda" if torch.cuda.is_available() else "cpu")
         )
@@ -72,21 +69,6 @@ class SalaryPredictor:
         self.preprocessor = joblib.load(self.preprocessor_path)
         self.y_scaler = joblib.load(self.y_scaler_path)
         self.model = self._load_model()
-
-    @staticmethod
-    def _resolve_artifact_path(path: str | Path) -> Path:
-        raw_path = Path(path)
-        candidates = [raw_path]
-
-        if not raw_path.is_absolute():
-            candidates.append(Path("notebook") / raw_path)
-
-        for candidate in candidates:
-            if candidate.exists():
-                return candidate
-
-        checked_paths = ", ".join(str(candidate) for candidate in candidates)
-        raise FileNotFoundError(f"Artifact not found. Checked paths: {checked_paths}")
 
     @staticmethod
     def _extract_state_dict(checkpoint: Any) -> dict[str, torch.Tensor]:

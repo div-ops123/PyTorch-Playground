@@ -15,5 +15,3 @@ dependencies = [
     "uvicorn>=0.46.0",
 ]
 
-[[tool.uv.index]]
-url = "https://download.pytorch.org/whl/cu126"
